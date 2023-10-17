@@ -207,29 +207,15 @@ public class FollowAutomation {
 				By.xpath("//div[@aria-label='Message']")));
 		
 		messageBox.sendKeys(message);
-		
-
-//		select message body
-//		WebElement messageBodyElement=wait.until(ExpectedConditions.presenceOfElementLocated(
-//				By.xpath("//div[contains(@aria-label,'Messages in conversation with')]")));
-//		List<WebElement> sendContentElements=messageBodyElement.findElements(
-//				By.xpath("//div[contains(@class,'x13dflua x19991ni')]"));
-//		
-//		System.out.println("before sending element"+sendContentElements.size());
-//		int previousSize=sendContentElements.size();
-//		sending image file
-//		WebElement fileUploadButton=wait.until(ExpectedConditions.presenceOfElementLocated
-//				(By.xpath("//input[contains(@class,'x1s85apg')]")));
-//		String path="C:\\Users\\DELL 1\\eclipse-workspace\\InstagramAutomation\\video\\video.mp4";
-//		fileUploadButton.sendKeys(path);
-		
+				
 //		send button
 		
 		WebElement sendButtonElement=wait.until(ExpectedConditions.presenceOfElementLocated(
 				By.xpath("//div[text()='Send']")));
 		
 		sendButtonElement.click();
-		
+		Thread.sleep(5000);
+
 //		WebElement currentContentElement=wait.until(sendContentElements.get(previousSize)));
 //		Thread.sleep(5000);
 		    

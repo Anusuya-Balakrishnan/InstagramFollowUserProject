@@ -45,7 +45,7 @@ public class ExcelExample {
 		                	   linkMessage=row.getCell(1).getStringCellValue();
 		                	   
 		                	   if(!linkMessage.isEmpty()) {
-				            	   sendMessage=sendMessage.concat("\n").concat(linkMessage);
+				            	   sendMessage=sendMessage.concat(" ").concat(linkMessage);
 				               }
 		                	   
 
