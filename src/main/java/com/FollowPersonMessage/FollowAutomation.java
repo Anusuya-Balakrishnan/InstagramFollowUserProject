@@ -1,9 +1,17 @@
 package com.FollowPersonMessage;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
- 
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.By.ByXPath;
@@ -16,12 +24,15 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class FollowAutomation {
 
+	
 	public void followAutomation() throws InterruptedException {
 		
 //		login page
 		WebDriverManager.chromedriver().setup();
 		RemoteWebDriver driver=new ChromeDriver();
 		driver.manage().window().maximize();
+//		10 second wait
+		Thread.sleep(10000);
 		driver.get("https://www.instagram.com/");
 		
 //		create object for excelExample
@@ -39,16 +50,29 @@ public class FollowAutomation {
 		
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
 		
+		CountProgramExecution c=new CountProgramExecution();
+		
+//		return true or false based on time and count of execution of program
+		if(!c.writeCount()) {
+			driver.close();
+		}
+		else {
+			
+
 //		username Element
 		WebElement userNameElement=wait.until(ExpectedConditions.presenceOfElementLocated
 				(ByXPath.xpath("//input[@name='username']")));
 		userNameElement.sendKeys(username);
 		
+//		wait 5 second
+		Thread.sleep(5000);
 //		password element
 		WebElement passwordElement=wait.until(ExpectedConditions.presenceOfElementLocated
 (ByXPath.xpath("//input[@name='password']")));
 		passwordElement.sendKeys(password);
 		
+//		10 second wait
+		Thread.sleep(10000);
 //		login button
 		WebElement submitElement=wait.until(ExpectedConditions.elementToBeClickable
 (ByXPath.xpath("//*[contains(text(),'Log in')]")));
@@ -61,6 +85,8 @@ public class FollowAutomation {
 		}
 		
 
+//		wait 5 second
+		Thread.sleep(5000);
 //		home page
 //		not now button1 
 		WebElement NotNowElement1=wait.until(ExpectedConditions.elementToBeClickable
@@ -71,6 +97,9 @@ public class FollowAutomation {
 		else {
 			System.out.println("NotNowElement1 is not enabled"); 
 		}
+		
+//		wait 5 second
+		Thread.sleep(5000);
 //		not now button2
 		WebElement NotNowElement2=wait.until(ExpectedConditions.
 				elementToBeClickable(ByXPath.xpath("//*[contains(text(),'Not Now')]")));
@@ -80,6 +109,9 @@ public class FollowAutomation {
 		else {
 			System.out.println("NotNowElement2 is not enabled"); 
 		}
+		
+//		wait 5 second
+		Thread.sleep(5000);
 //		notification element
 
 		WebElement notificationElement=wait.until(ExpectedConditions.
@@ -93,7 +125,8 @@ public class FollowAutomation {
 		WebElement todayElement=wait.until(ExpectedConditions.
 				presenceOfElementLocated(By.xpath("(//div[contains(@class,'x78zum5 x1c436fg')]//span)[1]")));
 		
-		
+//		wait 5 second
+		Thread.sleep(5000);
 //		find element which contains started following you 
 		List<WebElement> elements=wait.until(
 				ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//span[contains(text(),'started following you.')]")));
@@ -133,6 +166,9 @@ public class FollowAutomation {
 //		writing data in excel sheet
 		excelobj.writeFollowPersonData(newPersonList);
 		
+		
+//		wait 5 second
+		Thread.sleep(5000);
 		//logout part
 		
 //		WebElement moreButton=wait.until(ExpectedConditions.presenceOfElementLocated(
@@ -140,12 +176,18 @@ public class FollowAutomation {
 		WebElement moreButton=wait.until(ExpectedConditions.presenceOfElementLocated(
 				By.xpath("//div[@class='xdy9tzy']/following-sibling::span[1]")));
 		moreButton.click();
+		
+//		wait 5 second
+		Thread.sleep(5000);
 		WebElement logoutButton=wait.until(ExpectedConditions.presenceOfElementLocated(
 				By.xpath("//span[text()='Log out']")));
 		logoutButton.click();
+		
+//		10 second wait
+		Thread.sleep(10000);
 //		quit browser
 		driver.quit();
-
+		}
 		
 	}
 
@@ -153,21 +195,24 @@ public class FollowAutomation {
 	
 	public void sendMessage(RemoteWebDriver driver, WebDriverWait wait,String personName,String message) throws InterruptedException {
 		
-
+//		wait 5 second
+		Thread.sleep(5000);
 //	    finding direct message element
 		WebElement messageButtonElement=wait.until(ExpectedConditions.presenceOfElementLocated(
 				By.xpath("//a[contains(@aria-label,'Direct messaging')]")));
 		
 		messageButtonElement.click();
 		
-		
+//		wait 5 second
+		Thread.sleep(5000);
 //		click send message button
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
 		WebElement sendMessageBtnElement=wait.until(ExpectedConditions.presenceOfElementLocated(
 				By.xpath("//div[text()='Send message']")));
 		sendMessageBtnElement.click();
 
-		
+//		wait 5 second
+		Thread.sleep(5000);
 //		search input box
 		
 		WebElement searchBoxElement=wait.until(ExpectedConditions.presenceOfElementLocated(
@@ -177,7 +222,9 @@ public class FollowAutomation {
 //		String person="thamizh.HD";
 		searchBoxElement.sendKeys(personName);
 		
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+//		wait 5 second
+		Thread.sleep(5000);
+//		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
 		
 		try {
 			String personXpath="//span[contains(text(),'".concat(personName.toLowerCase()).concat("')]");
@@ -193,6 +240,8 @@ public class FollowAutomation {
 			searchResultCheckBox.click();
 		}
 		
+//		wait 5 second
+		Thread.sleep(5000);
 	// click chat button
 		
 		WebElement chatButton=wait.until(ExpectedConditions.presenceOfElementLocated(
@@ -200,13 +249,17 @@ public class FollowAutomation {
 		
 		chatButton.click();
 		
-		
+//		wait 5 second
+		Thread.sleep(5000);
 //		find message box
 		
 		WebElement messageBox=wait.until(ExpectedConditions.presenceOfElementLocated(
 				By.xpath("//div[@aria-label='Message']")));
 		
 		messageBox.sendKeys(message);
+		
+//		wait 5 second
+		Thread.sleep(5000);
 				
 //		send button
 		
